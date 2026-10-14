@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Opportunity Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="topbar">
+        <div class="container">
+            <p class="eyebrow">UNIVERSITY RESEARCH</p>
+            <h1>Research Opportunity Portal</h1>
+            <p class="subtitle">Discover projects, skills, and research openings in one place.</p>
+        </div>
+    </header>
+    <main class="container main-layout">
+        <section class="panel">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">OPPORTUNITIES</p>
+                    <h2>Available research</h2>
+                </div>
+                <button id="refreshButton" class="button secondary" type="button">Refresh</button>
+            </div>
+            <div id="message" role="status" aria-live="polite"></div>
+            <div id="opportunityList" class="opportunity-list">
+                <p class="muted">Loading opportunities…</p>
+            </div>
+        </section>
+
+        <section class="panel form-panel">
+            <p class="eyebrow">FACULTY WORKSPACE</p>
+            <h2 id="formHeading">Post an opportunity</h2>
+            <p class="muted">Fields marked required must be completed.</p>
+            <form id="opportunityForm">
+                <label>Research title *
+                    <input name="research_title" maxlength="200" required>
+                </label>
+                <label>Description *
+                    <textarea name="research_description" rows="3" required></textarea>
+                </label>
+                <label>Research area *
+                    <input name="research_area" maxlength="100" required>
+                </label>
+                <label>Faculty member's name *
+                    <input name="faculty_name" maxlength="150" required>
+                </label>
+                <label>Department *
+                    <input name="department" maxlength="100" required>
+                </label>
+                <label>Required skills *
+                    <textarea name="required_skills" rows="2" required placeholder="e.g. Python, data analysis"></textarea>
+                </label>
+                <div class="form-row">
+                    <label>Available positions *
+                        <input name="available_positions" type="number" min="1" step="1" required>
+                    </label>
+                    <label>Application deadline *
+                        <input name="application_deadline" type="date" required>
+                    </label>
+                </div>
+                <label>Status
+                    <select name="status">
+                        <option value="Open">Open</option>
+                        <option value="Closed">Closed</option>
+                    </select>
+                </label>
+                <div class="form-actions">
+                    <button class="button primary" type="submit" id="saveButton">Create opportunity</button>
+                    <button class="button secondary hidden" type="button" id="cancelEditButton">Cancel edit</button>
+                </div>
+            </form>
+        </section>
+    </main>
+    <footer class="container footer">Research Opportunity Portal · Flask REST API · MySQL</footer>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

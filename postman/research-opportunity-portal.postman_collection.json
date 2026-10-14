@@ -1,0 +1,86 @@
+{
+  "info": {
+    "name": "Research Opportunity Portal",
+    "description": "API tests for the FAST-NUCES University Research Opportunity Portal assignment.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key": "baseUrl", "value": "http://127.0.0.1:5000"},
+    {"key": "opportunityId", "value": "1"}
+  ],
+  "item": [
+    {
+      "name": "Create opportunity 1",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\"research_title\":\"AI for Healthcare\",\"research_description\":\"Explore machine learning methods for medical research.\",\"research_area\":\"Artificial Intelligence\",\"faculty_name\":\"Dr. Example One\",\"department\":\"Computer Science\",\"required_skills\":\"Python, machine learning\",\"available_positions\":3,\"application_deadline\":\"2026-11-30\",\"status\":\"Open\"}"},
+        "url": {"raw": "{{baseUrl}}/api/opportunities", "host": ["{{baseUrl}}"], "path": ["api", "opportunities"]}
+      },
+      "event": [{"listen":"test","script":{"type":"text/javascript","exec":["pm.test('Created with 201', function () { pm.response.to.have.status(201); });","const body = pm.response.json();","if (body.id) pm.collectionVariables.set('opportunityId', body.id);"]}}]
+    },
+    {
+      "name": "Create opportunity 2",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\"research_title\":\"Cybersecurity Lab Study\",\"research_description\":\"Study practical approaches to secure software.\",\"research_area\":\"Cybersecurity\",\"faculty_name\":\"Dr. Example Two\",\"department\":\"Computer Science\",\"required_skills\":\"Networking, Python\",\"available_positions\":2,\"application_deadline\":\"2026-12-15\",\"status\":\"Open\"}"},
+        "url": {"raw": "{{baseUrl}}/api/opportunities", "host": ["{{baseUrl}}"], "path": ["api", "opportunities"]}
+      }
+    },
+    {
+      "name": "Create opportunity 3",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\"research_title\":\"Robotics Navigation\",\"research_description\":\"Explore path planning for small mobile robots.\",\"research_area\":\"Robotics\",\"faculty_name\":\"Dr. Example Three\",\"department\":\"Electrical Engineering\",\"required_skills\":\"Python, robotics\",\"available_positions\":1,\"application_deadline\":\"2026-12-20\",\"status\":\"Open\"}"},
+        "url": {"raw": "{{baseUrl}}/api/opportunities", "host": ["{{baseUrl}}"], "path": ["api", "opportunities"]}
+      }
+    },
+    {
+      "name": "Retrieve all opportunities",
+      "request": {"method":"GET","url":{"raw":"{{baseUrl}}/api/opportunities","host":["{{baseUrl}}"],"path":["api","opportunities"]}}
+    },
+    {
+      "name": "Retrieve one opportunity",
+      "request": {"method":"GET","url":{"raw":"{{baseUrl}}/api/opportunities/{{opportunityId}}","host":["{{baseUrl}}"],"path":["api","opportunities","{{opportunityId}}"]}}
+    },
+    {
+      "name": "Update opportunity",
+      "request": {
+        "method":"PUT",
+        "header":[{"key":"Content-Type","value":"application/json"}],
+        "body":{"mode":"raw","raw":"{\"required_skills\":\"Python, machine learning, data analysis\",\"available_positions\":2}"},
+        "url":{"raw":"{{baseUrl}}/api/opportunities/{{opportunityId}}","host":["{{baseUrl}}"],"path":["api","opportunities","{{opportunityId}}"]}
+      }
+    },
+    {
+      "name": "Close opportunity",
+      "request": {
+        "method":"PUT",
+        "header":[{"key":"Content-Type","value":"application/json"}],
+        "body":{"mode":"raw","raw":"{\"status\":\"Closed\"}"},
+        "url":{"raw":"{{baseUrl}}/api/opportunities/{{opportunityId}}","host":["{{baseUrl}}"],"path":["api","opportunities","{{opportunityId}}"]}
+      }
+    },
+    {
+      "name": "Delete opportunity",
+      "request":{"method":"DELETE","url":{"raw":"{{baseUrl}}/api/opportunities/{{opportunityId}}","host":["{{baseUrl}}"],"path":["api","opportunities","{{opportunityId}}"]}}
+    },
+    {
+      "name": "Request deleted opportunity (expect 404)",
+      "request":{"method":"GET","url":{"raw":"{{baseUrl}}/api/opportunities/{{opportunityId}}","host":["{{baseUrl}}"],"path":["api","opportunities","{{opportunityId}}"]}},
+      "event":[{"listen":"test","script":{"type":"text/javascript","exec":["pm.test('Deleted opportunity returns 404', function () { pm.response.to.have.status(404); });"]}}]
+    },
+    {
+      "name": "Invalid data (expect 400)",
+      "request": {
+        "method":"POST",
+        "header":[{"key":"Content-Type","value":"application/json"}],
+        "body":{"mode":"raw","raw":"{\"research_title\":\"\"}"},
+        "url":{"raw":"{{baseUrl}}/api/opportunities","host":["{{baseUrl}}"],"path":["api","opportunities"]}
+      },
+      "event":[{"listen":"test","script":{"type":"text/javascript","exec":["pm.test('Invalid input returns 400', function () { pm.response.to.have.status(400); });"]}}]
+    }
+  ]
+}
